@@ -155,9 +155,14 @@ input,textarea,select{color-scheme:dark;}
 .bot-name{font-weight:700;color:var(--text-0);font-size:.95rem;}
 .bot-meta{font-size:.75rem;color:var(--text-2);margin-top:2px;}
 .type-badge{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:2px 8px;font-size:.65rem;font-weight:700;border:1px solid;margin-left:6px;}
-.type-peterdex{color:var(--accent-g);border-color:rgba(124,58,237,.25);background:rgba(124,58,237,.08);}
-.type-pandex{color:var(--orange);border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.08);}
 .type-welcome{color:var(--green);border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.08);}
+.type-guydex{color:var(--accent-g);border-color:rgba(124,58,237,.25);background:rgba(124,58,237,.08);}
+.type-breaddex{color:var(--orange);border-color:rgba(249,115,22,.25);background:rgba(249,115,22,.08);}
+.card-num{position:absolute;top:7px;left:8px;font-size:.6rem;font-weight:800;color:rgba(255,255,255,.55);background:rgba(0,0,0,.45);border-radius:5px;padding:1px 6px;letter-spacing:.04em;backdrop-filter:blur(4px);}
+.card{position:relative;}
+.restore-banner{background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.35);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;font-size:.85rem;color:var(--text-1);}
+.restore-banner strong{color:var(--orange);}
+.restore-banner .btn{flex-shrink:0;}
 .status-pill{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;color:var(--text-2);}
 .status-dot{width:7px;height:7px;border-radius:50%;background:var(--text-3);}
 .status-dot.live{background:var(--green);animation:pulse 2s infinite;}
@@ -406,120 +411,25 @@ input.fi:focus,select.fi:focus,textarea.fi:focus{border-color:var(--accent);box-
             <h3>Bot de bienvenida</h3>
             <p>Saluda automáticamente a cada nuevo miembro que se une al servidor.</p>
           </div>
-          <div class="type-card admin-only-card" id="type-card-peterdex" style="display:none;" onclick="startCreate('peterdex')">
-            <div class="tc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-            <h3>PeterDex <span class="admin-badge" style="margin-left:4px;">Solo admin</span></h3>
-            <p>Bot de colección de personajes (GuyDex). Se ejecuta desde peterdex.html.</p>
+          <div class="type-card" onclick="startCreate('guydex')">
+            <div class="tc-icon" style="color:#a78bfa;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><circle cx="19" cy="6" r="2"/><path d="M19 4V2M17.5 7.5l-1.5 1"/></svg></div>
+            <h3>GuyDex <span style="font-size:.72rem;font-weight:600;color:var(--text-2);">spawn bot</span></h3>
+            <p>Invoca personajes aleatorios con <code>/catch</code>. Los usuarios los coleccionan.</p>
           </div>
-          <div class="type-card admin-only-card" id="type-card-pandex" style="display:none;" onclick="startCreate('pandex')">
-            <div class="tc-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div>
-            <h3>PanDex <span class="admin-badge" style="margin-left:4px;">Solo admin</span></h3>
-            <p>Bot de colección de panes (BreadDex). Se ejecuta desde pandex.html.</p>
+          <div class="type-card" onclick="startCreate('breaddex')">
+            <div class="tc-icon" style="color:#f97316;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11c0-3.87 4.03-7 9-7s9 3.13 9 7c0 1.66-.73 3.17-1.94 4.35L18 20H6l-.06-4.65C4.73 14.17 4 12.66 4 11z"/><line x1="12" y1="4" x2="12" y2="11"/></svg></div>
+            <h3>BreadDex <span style="font-size:.72rem;font-weight:600;color:var(--text-2);">spawn bot</span></h3>
+            <p>Invoca panes misteriosos con <code>/mine</code>. Los usuarios los descubren.</p>
           </div>
+
         </div>
       </div>
-
-      <!-- PAGE: CREAR/EDITAR BOT PETERDEX (GUYDEX) -->
-      <div class="page" id="page-edit-peterdex">
-        <button class="back-link" onclick="showPage('type-picker')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Volver
-        </button>
-        <div class="form-box">
-          <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg> PeterDex (GuyDex)</h3>
-          <div class="sub">Bot independiente que corre desde <code>peterdex.html</code>. Activar/desactivar por comunidad y canal se hace desde ese archivo — aquí solo administras su identidad y el catálogo de personajes.</div>
-          <div class="form-group"><label>Nombre del bot *</label><input type="text" id="pd-name" placeholder="PeterDex"></div>
-          <div class="form-group"><label>Avatar (URL, opcional)</label><input type="url" id="pd-avatar" placeholder="https://..."></div>
-          <div class="form-group"><label>Color</label><input type="color" id="pd-color" value="#7c3aed" style="width:56px;height:38px;padding:2px;cursor:pointer;"></div>
-          <div class="form-actions">
-            <button class="btn btn-primary" onclick="saveBot('peterdex')">Guardar bot</button>
-            <button class="btn btn-ghost" onclick="showPage('list')">Cancelar</button>
-          </div>
-        </div>
-
-        <div class="form-box" style="margin-top:16px;">
-          <h3>Agregar nuevo personaje</h3>
-          <div class="form-grid">
-            <div class="form-group"><label>Nombre *</label><input type="text" class="fi" id="g-name" placeholder="Peter Griffin"></div>
-            <div class="form-group"><label>Rareza *</label>
-              <select class="fi" id="g-rarity">
-                <option value="common">○ Common</option><option value="uncommon">◉ Uncommon</option>
-                <option value="rare">◈ Rare</option><option value="epic">◆ Epic</option><option value="legendary">★ Legendary</option>
-              </select>
-            </div>
-            <div class="form-group full"><label>Descripción</label><textarea class="fi" id="g-desc" placeholder="Personaje principal de Family Guy..."></textarea></div>
-            <div class="form-group full"><label>Frase famosa</label><input type="text" class="fi" id="g-quote" placeholder="Giggity!"></div>
-            <div class="form-group full"><label>URL de imagen</label><input type="url" class="fi" id="g-img" placeholder="https://..." oninput="previewImg('g-img','g-preview')"><div class="img-preview" id="g-preview" style="margin-top:8px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div></div>
-            <div class="form-group"><label>Primera aparición</label><input type="text" class="fi" id="g-episode" placeholder="S1E1 Death Has a Shadow"></div>
-            <div class="form-group"><label>Peso de aparición (1-100)</label><input type="number" class="fi" id="g-weight" min="1" max="100" value="60"></div>
-          </div>
-          <div style="margin-top:16px;display:flex;gap:10px;">
-            <button class="btn btn-primary" onclick="addGuy()">+ Agregar personaje</button>
-            <button class="btn btn-ghost" onclick="clearGuyForm()">Limpiar</button>
-          </div>
-        </div>
-        <div class="section-header" style="margin-top:8px;">
-          <div><h2 style="font-size:1.05rem;">Base de datos — GuyDex</h2></div>
-          <span class="count-badge" id="guy-count">0 personajes</span>
-        </div>
-        <div style="margin-bottom:12px;">
-          <input type="text" placeholder="Buscar personajes..." oninput="filterCards('guy',this.value)" style="background:var(--bg-2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:8px 14px;color:var(--text-0);font-family:var(--font);font-size:.875rem;outline:none;width:260px;">
-        </div>
-        <div class="cards-grid" id="guy-grid"></div>
-      </div>
-
-      <!-- PAGE: CREAR/EDITAR BOT PANDEX (BREADDEX) -->
-      <div class="page" id="page-edit-pandex">
-        <button class="back-link" onclick="showPage('type-picker')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Volver
-        </button>
-        <div class="form-box">
-          <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg> PanDex (BreadDex)</h3>
-          <div class="sub">Bot independiente que corre desde <code>pandex.html</code>. Activar/desactivar por comunidad y canal se hace desde ese archivo — aquí solo administras su identidad y el catálogo de panes.</div>
-          <div class="form-group"><label>Nombre del bot *</label><input type="text" id="pn-name" placeholder="PanDex"></div>
-          <div class="form-group"><label>Avatar (URL, opcional)</label><input type="url" id="pn-avatar" placeholder="https://..."></div>
-          <div class="form-group"><label>Color</label><input type="color" id="pn-color" value="#f97316" style="width:56px;height:38px;padding:2px;cursor:pointer;"></div>
-          <div class="form-actions">
-            <button class="btn btn-primary" onclick="saveBot('pandex')">Guardar bot</button>
-            <button class="btn btn-ghost" onclick="showPage('list')">Cancelar</button>
-          </div>
-        </div>
-
-        <div class="form-box" style="margin-top:16px;">
-          <h3>Agregar nuevo pan</h3>
-          <div class="form-grid">
-            <div class="form-group"><label>Nombre *</label><input type="text" class="fi" id="b-name" placeholder="Breadstix"></div>
-            <div class="form-group"><label>Rareza *</label>
-              <select class="fi" id="b-rarity">
-                <option value="common">○ Common</option><option value="uncommon">◉ Uncommon</option>
-                <option value="rare">◈ Rare</option><option value="epic">◆ Epic</option><option value="legendary">★ Legendary</option>
-              </select>
-            </div>
-            <div class="form-group full"><label>Alias aceptados (separados por coma) *</label><input type="text" class="fi" id="b-aliases" placeholder="breadstix, bread stix, bstix"><span class="form-hint">El bot aceptará cualquiera de estos como respuesta correcta.</span></div>
-            <div class="form-group full"><label>Descripción</label><textarea class="fi" id="b-desc" placeholder="Un pan clásico de Breadwinners..."></textarea></div>
-            <div class="form-group full"><label>URL de imagen</label><input type="url" class="fi" id="b-img" placeholder="https://..." oninput="previewImg('b-img','b-preview')"><div class="img-preview" id="b-preview" style="margin-top:8px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="1.5"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div></div>
-            <div class="form-group"><label>Episodio de origen</label><input type="text" class="fi" id="b-episode" placeholder="Pilot, S1E1..."></div>
-            <div class="form-group"><label>Tasa de captura (1-100)</label><input type="number" class="fi" id="b-catchrate" min="1" max="100" value="70"></div>
-          </div>
-          <div style="margin-top:16px;display:flex;gap:10px;">
-            <button class="btn btn-primary" onclick="addBread()">+ Agregar pan</button>
-            <button class="btn btn-ghost" onclick="clearBreadForm()">Limpiar</button>
-          </div>
-        </div>
-        <div class="section-header" style="margin-top:8px;">
-          <div><h2 style="font-size:1.05rem;">Base de datos — BreadDex</h2></div>
-          <span class="count-badge" id="bread-count">0 panes</span>
-        </div>
-        <div style="margin-bottom:12px;">
-          <input type="text" placeholder="Buscar panes..." oninput="filterCards('bread',this.value)" style="background:var(--bg-2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:8px 14px;color:var(--text-0);font-family:var(--font);font-size:.875rem;outline:none;width:260px;">
-        </div>
-        <div class="cards-grid" id="bread-grid"></div>
-      </div>
-
       <!-- PAGE: CREAR/EDITAR BOT BIENVENIDA -->
       <div class="page" id="page-edit-welcome">
         <button class="back-link" onclick="showPage('type-picker')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Volver
         </button>
+        <div id="restore-banner-welcome" class="restore-banner" style="display:none;"></div>
         <div class="form-box">
           <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Bot de bienvenida</h3>
           <div class="sub">Publica un mensaje automático cuando alguien nuevo se une al servidor.</div>
@@ -534,6 +444,62 @@ input.fi:focus,select.fi:focus,textarea.fi:focus{border-color:var(--accent);box-
             <button class="btn btn-ghost" onclick="showPage('list')">Cancelar</button>
           </div>
         </div>
+      </div>
+
+      <!-- PAGE: CREAR/EDITAR BOT GUYDEX -->
+      <div class="page" id="page-edit-guydex">
+        <button class="back-link" onclick="showPage('type-picker')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Volver
+        </button>
+        <div id="restore-banner-guydex" class="restore-banner" style="display:none;"></div>
+        <div class="form-box">
+          <h3 style="color:#a78bfa;">👤 GuyDex — Configuración del bot</h3>
+          <div class="sub">El bot responde a <code>/catch</code> en los canales configurados. Los personajes aparecen aleatoriamente según el peso de spawn.</div>
+          <div class="form-group"><label>Nombre del bot *</label><input type="text" id="gd-name" placeholder="GuyDex" class="fi"></div>
+          <div class="form-group"><label>Avatar (URL)</label><input type="url" id="gd-avatar" placeholder="https://..." class="fi"></div>
+          <div class="form-group"><label>Color</label><input type="color" id="gd-color" value="#7c3aed" style="width:56px;height:38px;padding:2px;cursor:pointer;"></div>
+          <div class="form-group"><label>Comando de spawn</label><input type="text" id="gd-cmd" placeholder="/catch" class="fi" value="/catch"><div class="form-hint">Los usuarios escriben este comando para invocar un personaje.</div></div>
+          <div class="form-group"><label>¿En qué comunidades?</label><div class="server-pick" id="gd-servers"></div></div>
+          <div class="form-group" id="gd-channel-pickers"></div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="saveBot('guydex')">Guardar bot</button>
+            <button class="btn btn-ghost" onclick="showPage('list')">Cancelar</button>
+          </div>
+        </div>
+        <div class="section-header" style="margin-top:20px;">
+          <div><h2 style="font-size:1.05rem;">Base de datos — GuyDex</h2></div>
+          <span class="count-badge" id="guy-count2">0 personajes</span>
+        </div>
+        <div style="margin-bottom:12px;"><input type="text" placeholder="Buscar personajes..." oninput="filterCards('guy',this.value)" style="background:var(--bg-2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:8px 14px;color:var(--text-0);font-family:var(--font);font-size:.875rem;outline:none;width:260px;"></div>
+        <div class="cards-grid" id="guy-grid2"></div>
+      </div>
+
+      <!-- PAGE: CREAR/EDITAR BOT BREADDEX -->
+      <div class="page" id="page-edit-breaddex">
+        <button class="back-link" onclick="showPage('type-picker')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Volver
+        </button>
+        <div id="restore-banner-breaddex" class="restore-banner" style="display:none;"></div>
+        <div class="form-box">
+          <h3 style="color:#f97316;">🍞 BreadDex — Configuración del bot</h3>
+          <div class="sub">El bot responde a <code>/mine</code> en los canales configurados. Los panes aparecen aleatoriamente según la tasa de captura.</div>
+          <div class="form-group"><label>Nombre del bot *</label><input type="text" id="bd-name" placeholder="BreadDex" class="fi"></div>
+          <div class="form-group"><label>Avatar (URL)</label><input type="url" id="bd-avatar" placeholder="https://..." class="fi"></div>
+          <div class="form-group"><label>Color</label><input type="color" id="bd-color" value="#f97316" style="width:56px;height:38px;padding:2px;cursor:pointer;"></div>
+          <div class="form-group"><label>Comando de spawn</label><input type="text" id="bd-cmd" placeholder="/mine" class="fi" value="/mine"><div class="form-hint">Los usuarios escriben este comando para descubrir un pan.</div></div>
+          <div class="form-group"><label>¿En qué comunidades?</label><div class="server-pick" id="bd-servers"></div></div>
+          <div class="form-group" id="bd-channel-pickers"></div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="saveBot('breaddex')">Guardar bot</button>
+            <button class="btn btn-ghost" onclick="showPage('list')">Cancelar</button>
+          </div>
+        </div>
+        <div class="section-header" style="margin-top:20px;">
+          <div><h2 style="font-size:1.05rem;">Base de datos — BreadDex</h2></div>
+          <span class="count-badge" id="bread-count2">0 panes</span>
+        </div>
+        <div style="margin-bottom:12px;"><input type="text" placeholder="Buscar panes..." oninput="filterCards('bread',this.value)" style="background:var(--bg-2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:8px 14px;color:var(--text-0);font-family:var(--font);font-size:.875rem;outline:none;width:260px;"></div>
+        <div class="cards-grid" id="bread-grid2"></div>
       </div>
 
       <!-- PAGE: EJECUTAR BOT -->
@@ -684,8 +650,6 @@ document.addEventListener('firebase-ready', ()=>{
     isAdmin = (user.uid === ADMIN_UID);
     if(isAdmin){
       document.getElementById('admin-only-indicator').style.display='';
-      document.getElementById('type-card-peterdex').style.display='';
-      document.getElementById('type-card-pandex').style.display='';
       loadAll(); // carga datos admin
     }
     await loadMyServers();
@@ -723,12 +687,35 @@ async function loadMyServers(){
   });
 }
 
+// Tipos de bot conocidos — cualquier tipo nuevo sólo necesita añadirse aquí
+const BOT_TYPES = ['welcome','guydex','breaddex'];
+// Datos de tipos huérfanos detectados al cargar (type -> count)
+let orphanedData = {};
+
 function loadMyBots(){
   fbOn('botdata/bots', snap=>{
     const all = snap.exists() ? snap.val() : {};
     myBots = Object.values(all).filter(b=>b.ownerId===window._currentUid);
     renderMyBots();
+    detectOrphanedData();
   });
+}
+
+// Escanea botdata/{type} para cada tipo sin bot registrado del usuario.
+// Resultado guardado en orphanedData — checkBotRestore lo consulta al abrir la página.
+async function detectOrphanedData(){
+  orphanedData = {};
+  const unregisteredTypes = BOT_TYPES.filter(t => !myBots.some(b=>b.type===t));
+  await Promise.all(unregisteredTypes.map(async type=>{
+    const snap = await fbGetSnap('botdata/'+type);
+    if(!snap||!snap.exists()) return;
+    const data = snap.val()||{};
+    const count = Object.values(data).reduce((sum,node)=>{
+      if(typeof node==='object'&&node!==null) return sum+Object.keys(node).length;
+      return sum+1;
+    },0);
+    if(count>0) orphanedData[type]=count;
+  }));
 }
 
 function renderMyBots(){
@@ -737,13 +724,13 @@ function renderMyBots(){
     el.innerHTML = `<div class="empty"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01"/></svg><p>Aún no has creado ningún bot.<br>Haz clic en "Crear bot" para empezar.</p></div>`;
     return;
   }
-  const typeLabels={welcome:'Bienvenida',peterdex:'PeterDex',pandex:'PanDex'};
-  const standalone={peterdex:1,pandex:1}; // se ejecutan desde su propio archivo .html
+  const typeLabels={welcome:'Bienvenida',guydex:'GuyDex',breaddex:'BreadDex'};
+  const standalone={guydex:1,breaddex:1}; // spawn bots se ejecutan localmente
   el.innerHTML = myBots.map(b=>`
     <div class="bot-card">
       <div class="bot-ava" style="background:${b.avatarColor||'#7c3aed'};">${b.avatarUrl?`<img src="${b.avatarUrl}">`:(b.name||'B')[0].toUpperCase()}</div>
       <div style="flex:1;min-width:0;">
-        <div class="bot-name">${b.name}<span class="type-badge type-${b.type}">${typeLabels[b.type]||b.type}</span></div>
+        <div class="bot-name">${b.name}<span class="type-badge type-${b.type}">${typeLabels[b.type]||b.type}</span>${(b.type==='guydex'||b.type==='breaddex')?'<span style="font-size:.65rem;color:var(--text-3);margin-left:4px;">spawn</span>':''}</div>
         <div class="bot-meta">${standalone[b.type]?'Se ejecuta desde '+b.type+'.html':(b.installedServers||[]).length+' comunidad'+((b.installedServers||[]).length===1?'':'es')+' activa'+((b.installedServers||[]).length===1?'':'s')}</div>
       </div>
       <button class="btn btn-ghost btn-sm" onclick="editBot('${b.uid}')">Editar</button>
@@ -754,23 +741,32 @@ function renderMyBots(){
 
 function startCreate(type){
   editingBotId=null;currentEditType=type;selectedServers=new Set();welcomeChannelChoice={};
-  if(type==='peterdex'){
-    ['pd-name','pd-avatar'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('pd-name').value='PeterDex';
-    document.getElementById('pd-color').value='#7c3aed';
-    showPage('edit-peterdex');
-  } else if(type==='pandex'){
-    ['pn-name','pn-avatar'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('pn-name').value='PanDex';
-    document.getElementById('pn-color').value='#f97316';
-    showPage('edit-pandex');
-  } else {
+  if(type==='welcome'){
+    checkBotRestore('welcome');
     ['w-name','w-avatar'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('w-color').value='#10b981';
     document.getElementById('w-message').value='¡Bienvenido/a {usuario} a {servidor}! 🎉';
     renderServerPicker('w-servers','w');
     renderWelcomeChannelPickers();
     showPage('edit-welcome');
+  } else if(type==='guydex'){
+    checkBotRestore('guydex');
+    ['gd-name','gd-avatar'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('gd-color').value='#7c3aed';
+    document.getElementById('gd-cmd').value='/catch';
+    renderServerPicker('gd-servers','gd');
+    renderDexChannelPickers('gd');
+    renderDexCards();
+    showPage('edit-guydex');
+  } else if(type==='breaddex'){
+    checkBotRestore('breaddex');
+    ['bd-name','bd-avatar'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('bd-color').value='#f97316';
+    document.getElementById('bd-cmd').value='/mine';
+    renderServerPicker('bd-servers','bd');
+    renderDexChannelPickers('bd');
+    renderDexCards();
+    showPage('edit-breaddex');
   }
 }
 
@@ -778,23 +774,26 @@ function editBot(id){
   const b=myBots.find(x=>x.uid===id);if(!b)return;
   editingBotId=id;currentEditType=b.type;
   selectedServers=new Set(b.installedServers||[]);
-  if(b.type==='peterdex'){
-    document.getElementById('pd-name').value=b.name||'PeterDex';
-    document.getElementById('pd-avatar').value=b.avatarUrl||'';
-    document.getElementById('pd-color').value=b.avatarColor||'#7c3aed';
-    showPage('edit-peterdex');
-  } else if(b.type==='pandex'){
-    document.getElementById('pn-name').value=b.name||'PanDex';
-    document.getElementById('pn-avatar').value=b.avatarUrl||'';
-    document.getElementById('pn-color').value=b.avatarColor||'#f97316';
-    showPage('edit-pandex');
-  } else {
+  welcomeChannelChoice={...(b.dexChannels||b.welcomeChannels||{})};
+  if(b.type==='welcome'){
     document.getElementById('w-name').value=b.name||'';
     document.getElementById('w-avatar').value=b.avatarUrl||'';
     document.getElementById('w-color').value=b.avatarColor||'#10b981';
     document.getElementById('w-message').value=b.welcomeMessage||'¡Bienvenido/a {usuario} a {servidor}! 🎉';
     welcomeChannelChoice={...(b.welcomeChannels||{})};
     renderServerPicker('w-servers','w');renderWelcomeChannelPickers();showPage('edit-welcome');
+  } else if(b.type==='guydex'){
+    document.getElementById('gd-name').value=b.name||'GuyDex';
+    document.getElementById('gd-avatar').value=b.avatarUrl||'';
+    document.getElementById('gd-color').value=b.avatarColor||'#7c3aed';
+    document.getElementById('gd-cmd').value=b.spawnCmd||'/catch';
+    renderServerPicker('gd-servers','gd');renderDexChannelPickers('gd');renderDexCards();showPage('edit-guydex');
+  } else if(b.type==='breaddex'){
+    document.getElementById('bd-name').value=b.name||'BreadDex';
+    document.getElementById('bd-avatar').value=b.avatarUrl||'';
+    document.getElementById('bd-color').value=b.avatarColor||'#f97316';
+    document.getElementById('bd-cmd').value=b.spawnCmd||'/mine';
+    renderServerPicker('bd-servers','bd');renderDexChannelPickers('bd');renderDexCards();showPage('edit-breaddex');
   }
 }
 
@@ -832,19 +831,25 @@ function renderWelcomeChannelPickers(){
 }
 
 async function saveBot(type){
-  if(type==='peterdex'||type==='pandex'){
-    if(!isAdmin){showToast('⚠️ Solo el admin puede crear este bot');return;}
-    const prefix=type==='peterdex'?'pd':'pn';
-    const name=document.getElementById(prefix+'-name').value.trim()||(type==='peterdex'?'PeterDex':'PanDex');
-    const id='bot_'+type; // singleton: coincide con el uid que usa peterdex.html/pandex.html
+  if(type==='guydex'||type==='breaddex'){
+    const pre=type==='guydex'?'gd':'bd';
+    const name=document.getElementById(pre+'-name').value.trim()||(type==='guydex'?'GuyDex':'BreadDex');
+    const spawnCmd=document.getElementById(pre+'-cmd').value.trim()||(type==='guydex'?'/catch':'/mine');
+    const id=editingBotId||('bot_'+type);
     const bot={uid:id,name,type,ownerId:window._currentUid,builtin:true,
-      avatarUrl:document.getElementById(prefix+'-avatar').value.trim(),
-      avatarColor:document.getElementById(prefix+'-color').value,
-      description:type==='peterdex'?'Bot de colección de personajes (GuyDex)':'Bot de colección de panes (BreadDex)',
-      botCommands:type==='peterdex'?['/catch — Atrapar el personaje actual','/guydex — Ver tu colección']:['/mine — Descubrir un pan misterioso','/breaddex — Ver tu colección']};
+      avatarUrl:document.getElementById(pre+'-avatar').value.trim(),
+      avatarColor:document.getElementById(pre+'-color').value,
+      spawnCmd,
+      description:type==='guydex'?'Bot de colección de personajes (GuyDex)':'Bot de colección de panes (BreadDex)',
+      botCommands:[spawnCmd+' — Invocar un '+(type==='guydex'?'personaje':'pan')+' aleatorio',
+                   (type==='guydex'?'/guydex':'/breaddex')+' — Ver tu colección'],
+      installedServers:[...selectedServers],
+      dexChannels:{...welcomeChannelChoice}};
     await fbSet('botdata/bots/'+id,bot);
     showToast('✅ Bot guardado');showPage('list');
-  } else if(type==='welcome'){
+    return;
+  }
+  if(type==='welcome'){
     const name=document.getElementById('w-name').value.trim();
     const message=document.getElementById('w-message').value.trim();
     if(!name){showToast('⚠️ Ponle un nombre al bot');return;}
@@ -882,9 +887,129 @@ function stopAndGoBack(){
 }
 function _beforeUnloadHandler(){if(runningBot)fbRemove('presence/'+runningBot.uid);}
 
+
+// ══════════════════════════════════════════
+// DEX BOTS — helpers y lógica de spawn
+// ══════════════════════════════════════════
+
+function renderDexChannelPickers(prefix){
+  const el=document.getElementById(prefix+'-channel-pickers');if(!el)return;
+  if(!myServers.length){el.innerHTML='';return;}
+  el.innerHTML=Array.from(selectedServers).map(srvId=>{
+    const srv=myServers.find(s=>s.id===srvId);if(!srv)return'';
+    const channels=Object.values(srv.channels||{}).filter(c=>c.type==='text'||!c.type);
+    if(!channels.length)return'';
+    const current=welcomeChannelChoice[srvId]||(channels[0]?.id||'');
+    welcomeChannelChoice[srvId]=current;
+    return`<div style="margin-bottom:10px;">
+      <label style="font-size:.78rem;color:var(--text-2);display:block;margin-bottom:5px;">Canal en <strong style="color:var(--text-0);">${srv.name}</strong></label>
+      <select onchange="welcomeChannelChoice['${srvId}']=this.value" style="width:100%;background:var(--bg-3);border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text-0);font-family:var(--font);font-size:.85rem;outline:none;">
+        ${channels.map(ch=>`<option value="${ch.id}"${ch.id===current?' selected':''}>#${ch.name}</option>`).join('')}
+      </select></div>`;
+  }).join('');
+}
+
+// Muestra u oculta el banner de recuperación para un tipo de bot.
+// Usa orphanedData calculado en detectOrphanedData() al arrancar.
+function checkBotRestore(type){
+  const banner=document.getElementById('restore-banner-'+type);
+  if(!banner) return;
+  banner.style.display='none';
+  if(myBots.some(b=>b.type===type)) return; // ya registrado
+  const count=orphanedData[type];
+  if(!count) return;
+  banner.style.display='flex';
+  banner.innerHTML=`
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <div style="flex:1;">
+      <strong>Datos existentes detectados</strong><br>
+      <span style="font-size:.8rem;color:var(--text-2);">
+        Hay <strong>${count} elemento(s)</strong> en Firebase sin bot vinculado para este tipo.
+        Al guardar el bot quedarán asociados automáticamente.
+      </span>
+    </div>`;
+}
+
+// Función de spawn — invoca elemento aleatorio según pesos
+function spawnItem(type){
+  const pool=type==='guydex'?allGuys:allBreads;
+  if(!pool.length)return null;
+  const weightKey=type==='guydex'?'spawnWeight':'catchRate';
+  const totalWeight=pool.reduce((s,item)=>s+(item[weightKey]||60),0);
+  let rand=Math.random()*totalWeight;
+  for(const item of pool){
+    rand-=(item[weightKey]||60);
+    if(rand<=0)return item;
+  }
+  return pool[pool.length-1];
+}
+
+// Cuando el bot dex está activo, escucha mensajes en los canales configurados
+function startDexBot(bot){
+  const channels=Object.values(bot.dexChannels||{});
+  if(!channels.length){addLog('warn','No hay canales configurados para este bot.');return;}
+  const cmd=(bot.spawnCmd||'/catch').toLowerCase().trim();
+  const collectionCmd=bot.type==='guydex'?'/guydex':'/breaddex';
+  addLog('info',`Escuchando comando <b>${cmd}</b> en ${channels.length} canal(es).`);
+  channels.forEach(channelId=>{
+    if(!channelId)return;
+    const unsub=window._fbOnChildAdded(window._fbRef('state/messages/'+channelId), async snap=>{
+      if(!snap.exists())return;
+      const msg=snap.val();
+      if(!msg||msg.uid===bot.uid)return; // ignorar propios mensajes
+      const txt=(msg.content||'').trim().toLowerCase();
+      if(txt===cmd){
+        const item=spawnItem(bot.type);
+        if(!item){sendBotMsg(bot,channelId,'⚠️ No hay elementos en la base de datos aún.');return;}
+        const sorted=bot.type==='guydex'?[...allGuys].sort((a,b)=>(a.addedAt||0)-(b.addedAt||0)):[...allBreads].sort((a,b)=>(a.addedAt||0)-(b.addedAt||0));
+        const num=sorted.findIndex(x=>x.id===item.id)+1;
+        const numStr='#'+String(num).padStart(3,'0');
+        const rarLabel=cap(item.rarity);
+        const icon=RARITY_ICONS[item.rarity]||'○';
+        const emoji=bot.type==='guydex'?'👤':'🍞';
+        let reply=`${emoji} **${numStr} ${item.name}** apareció!\n`;
+        reply+=`${icon} ${rarLabel}`;
+        if(item.description)reply+=`\n_${item.description}_`;
+        if(item.quote)reply+=`\n> "${item.quote}"`;
+        if(item.imageUrl)reply+=`\n${item.imageUrl}`;
+        // Registrar captura
+        const captureKey='captures/'+msg.uid+'/'+bot.type+'/'+item.id;
+        await fbSet(captureKey,{itemId:item.id,name:item.name,rarity:item.rarity,num,caughtAt:Date.now()});
+        sendBotMsg(bot,channelId,reply);
+        addLog('success',`Spawneé ${numStr} ${item.name} (${rarLabel}) para ${msg.name||'un usuario'}`);
+      } else if(txt===collectionCmd){
+        // Mostrar colección del usuario
+        const snapCol=await fbGetSnap('captures/'+msg.uid+'/'+bot.type);
+        const col=snapCol?Object.values(snapCol.val()||{}):[]; 
+        if(!col.length){sendBotMsg(bot,channelId,`${msg.name||'Tú'} no tiene ningún elemento todavía. Usa \`${cmd}\` para conseguir uno!`);return;}
+        const byRarity=['legendary','epic','rare','uncommon','common'];
+        let reply=`📦 **Colección de ${msg.name||'usuario'}** — ${col.length} elemento(s):\n`;
+        byRarity.forEach(r=>{
+          const items=col.filter(x=>x.rarity===r);
+          if(items.length)reply+=`${RARITY_ICONS[r]} ${cap(r)}: ${items.map(x=>x.name).join(', ')}\n`;
+        });
+        sendBotMsg(bot,channelId,reply);
+        addLog('info',`Mostré colección de ${msg.name||'usuario'}`);
+      }
+    });
+    runningListeners.push(()=>{try{unsub();}catch(e){}});
+  });
+}
+
 async function runBot(id){
   const bot=myBots.find(b=>b.uid===id);if(!bot){showToast('Bot no encontrado');return;}
-  if(!bot.installedServers||!bot.installedServers.length){showToast('⚠️ Activa este bot en al menos una comunidad (Editar)');return;}
+  const isDex=bot.type==='guydex'||bot.type==='breaddex';
+  if(isDex){
+    const dexChs=Object.values(bot.dexChannels||{}).filter(Boolean);
+    if(!dexChs.length){showToast('⚠️ Configura al menos un canal para este bot (Editar)');return;}
+  } else if(!bot.installedServers||!bot.installedServers.length){
+    showToast('⚠️ Activa este bot en al menos una comunidad (Editar)');return;
+  }
   runningBot=bot;lastKnownMembers={};
   const ava=document.getElementById('run-avatar');
   ava.style.background=bot.avatarColor||'#7c3aed';
@@ -892,10 +1017,12 @@ async function runBot(id){
   document.getElementById('run-name').textContent=bot.name;
   document.getElementById('run-log').innerHTML='';
   showPage('run');
-  addLog('system',`${bot.name} iniciado (Bot de bienvenida).`);
+  const typeLabel=bot.type==='guydex'?'GuyDex':bot.type==='breaddex'?'BreadDex':'Bienvenida';
+  addLog('system',`${bot.name} iniciado (Bot ${typeLabel}).`);
   await fbSet('presence/'+bot.uid,{uid:bot.uid,name:bot.name,status:'online',ts:Date.now()});
   window.addEventListener('beforeunload',_beforeUnloadHandler);
-  startWelcomeBot(bot);
+  if(bot.type==='guydex'||bot.type==='breaddex') startDexBot(bot);
+  else startWelcomeBot(bot);
 }
 
 function startWelcomeBot(bot){
@@ -993,15 +1120,24 @@ function loadBreads(){
     renderBreads(allBreads);
     const el=document.getElementById('bread-count');if(el)el.textContent=allBreads.length+' panes';
     const st=document.getElementById('stat-breads');if(st)st.textContent=allBreads.length;
+    const el2=document.getElementById('bread-count2');if(el2)el2.textContent=allBreads.length+' panes';
   });
 }
 
 function renderBreads(list){
-  const grid=document.getElementById('bread-grid');if(!grid)return;
-  if(!list.length){grid.innerHTML='<div class="empty"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg><p>Sin panes aún. ¡Agrega el primero!</p></div>';return;}
-  grid.innerHTML=list.map(b=>`
-    <div class="card">
-      <div class="card-img">${b.imageUrl?`<img src="${b.imageUrl}" onerror="this.parentElement.innerHTML='<span style=color:var(--text-3);font-size:.8rem;>Sin img</span>'">`:'🍞'}</div>
+  const grids=['bread-grid','bread-grid2'].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!grids.length)return;
+  const empty='<div class="empty"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg><p>Sin panes aún. ¡Agrega el primero!</p></div>';
+  // Sort by addedAt for collection number
+  const sorted=[...allBreads].sort((a,b)=>(a.addedAt||0)-(b.addedAt||0));
+  const numMap={};sorted.forEach((b,i)=>numMap[b.id]=i+1);
+  const html=list.map(b=>{
+    const num=numMap[b.id]||'?';
+    return`<div class="card">
+      <div class="card-img">
+        <span class="card-num">#${String(num).padStart(3,'0')}</span>
+        ${b.imageUrl?`<img src="${b.imageUrl}" onerror="this.parentElement.innerHTML='<span style=color:var(--text-3);font-size:.8rem;>Sin img</span>'">`:'🍞'}
+      </div>
       <div class="card-body">
         <div class="card-name">${b.name}</div>
         <div class="card-desc">${b.description||'Sin descripción.'}</div>
@@ -1009,10 +1145,13 @@ function renderBreads(list){
         ${b.aliases?.length?`<div style="font-size:.7rem;color:var(--text-3);margin-top:5px;">Alias: ${b.aliases.join(', ')}</div>`:''}
         <div class="card-actions">
           <button class="btn btn-ghost btn-sm" onclick="openEditBread('${b.id}')">Editar</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteBread('${b.id}','${b.name.replace(/'/g,"\\'")}')">🗑️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteBread('${b.id}','${b.name.replace(/'/g,"\'")}')">🗑️</button>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+  grids.forEach(g=>{g.innerHTML=list.length?html:empty;});
+  const c2=document.getElementById('bread-count2');if(c2)c2.textContent=allBreads.length+' panes';
 }
 
 async function addBread(){
@@ -1063,15 +1202,23 @@ function loadGuys(){
     renderGuys(allGuys);
     const el=document.getElementById('guy-count');if(el)el.textContent=allGuys.length+' personajes';
     const st=document.getElementById('stat-guys');if(st)st.textContent=allGuys.length;
+    const el2=document.getElementById('guy-count2');if(el2)el2.textContent=allGuys.length+' personajes';
   });
 }
 
 function renderGuys(list){
-  const grid=document.getElementById('guy-grid');if(!grid)return;
-  if(!list.length){grid.innerHTML='<div class="empty"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><p>Sin personajes aún. ¡Agrega el primero!</p></div>';return;}
-  grid.innerHTML=list.map(g=>`
-    <div class="card">
-      <div class="card-img">${g.imageUrl?`<img src="${g.imageUrl}" onerror="this.parentElement.innerHTML='👨'">`:'👨'}</div>
+  const grids=['guy-grid','guy-grid2'].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!grids.length)return;
+  const empty='<div class="empty"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><p>Sin personajes aún. ¡Agrega el primero!</p></div>';
+  const sorted=[...allGuys].sort((a,b)=>(a.addedAt||0)-(b.addedAt||0));
+  const numMap={};sorted.forEach((g,i)=>numMap[g.id]=i+1);
+  const html=list.map(g=>{
+    const num=numMap[g.id]||'?';
+    return`<div class="card">
+      <div class="card-img">
+        <span class="card-num">#${String(num).padStart(3,'0')}</span>
+        ${g.imageUrl?`<img src="${g.imageUrl}" onerror="this.parentElement.innerHTML='👨'"`+'>':'👨'}
+      </div>
       <div class="card-body">
         <div class="card-name">${g.name}</div>
         <div class="card-desc">${g.description||'Sin descripción.'}</div>
@@ -1079,10 +1226,13 @@ function renderGuys(list){
         <div class="card-meta"><span class="rarity-badge r-${g.rarity}">${RARITY_ICONS[g.rarity]} ${cap(g.rarity)}</span><span style="font-size:.72rem;color:var(--text-3);">⚖️${g.spawnWeight||60}</span></div>
         <div class="card-actions">
           <button class="btn btn-ghost btn-sm" onclick="openEditGuy('${g.id}')">Editar</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteGuy('${g.id}','${g.name.replace(/'/g,"\\'")}')">🗑️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteGuy('${g.id}','${g.name.replace(/'/g,"\'")}')">🗑️</button>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+  grids.forEach(g=>{g.innerHTML=list.length?html:empty;});
+  const c2=document.getElementById('guy-count2');if(c2)c2.textContent=allGuys.length+' personajes';
 }
 
 async function addGuy(){
@@ -1200,6 +1350,14 @@ async function clearAllCaptures(){
 }
 
 // ── SEARCH / FILTER ──
+function renderDexCards(){
+  // Triggered when opening guydex/breaddex edit pages
+  // The main fbOn listeners already populate allBreads/allGuys
+  // Just re-render if data is loaded
+  if(allBreads.length)renderBreads(allBreads);
+  if(allGuys.length)renderGuys(allGuys);
+}
+
 function filterCards(type,q){
   const list=type==='bread'?allBreads:allGuys;
   const filtered=q?list.filter(x=>x.name.toLowerCase().includes(q.toLowerCase())):list;
