@@ -12,13 +12,13 @@
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
-    apiKey:            "AIzaSyApMNWmt8czi1WVbddSBfkA1oskaZ4G1i4",
-    authDomain:        "nova-chat-app-b32e3.firebaseapp.com",
-    databaseURL:       "https://nova-chat-app-b32e3-default-rtdb.firebaseio.com",
-    projectId:         "nova-chat-app-b32e3",
-    storageBucket:     "nova-chat-app-b32e3.firebasestorage.app",
-    messagingSenderId: "919535150097",
-    appId:             "1:919535150097:web:7c54d32b488107d54e7db0"
+    apiKey:            "AIzaSyAjI362VY6rzQ2mIqdMBt7qBXV1peW3LEM",
+    authDomain:        "nova-chat-and-communities.firebaseapp.com",
+    databaseURL:       "https://nova-chat-and-communities-default-rtdb.firebaseio.com",
+    projectId:         "nova-chat-and-communities",
+    storageBucket:     "nova-chat-and-communities.firebasestorage.app",
+    messagingSenderId: "130902442962",
+    appId:             "1:130902442962:web:273ffa4949aa287879fe0b"
   };
 
   const app  = initializeApp(firebaseConfig);
@@ -221,6 +221,7 @@ body{font-family:var(--font);background:var(--bg-0);color:var(--text-1);min-heig
       <button class="page-tab active" onclick="switchPage('breaddex',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg> BreadDex</button>
       <button class="page-tab" onclick="switchPage('guydex',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg> GuyDex</button>
       <button class="page-tab" onclick="switchPage('servers',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg> Servers</button>
+      <button class="page-tab" onclick="switchPage('bots',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15h.01M16 15h.01"/></svg> Bots</button>
       <button class="page-tab" onclick="switchPage('captures',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg> Captures</button>
     </div>
 
@@ -355,6 +356,33 @@ body{font-family:var(--font);background:var(--bg-0);color:var(--text-1);min-heig
       <div id="servers-list" style="display:flex;flex-direction:column;gap:10px;"></div>
     </div>
 
+    <!-- BOTS PAGE -->
+    <div class="page" id="page-bots">
+      <div class="section-header" style="margin-bottom:20px;">
+        <div><h2>Bot Registry</h2><p>Bots instalados en Nova. PanDex y PeterDex aparecen automáticamente al activarlos. Aquí puedes registrar bots adicionales manualmente.</p></div>
+        <button class="btn btn-primary btn-sm" onclick="openAddBotModal()">+ Add Bot</button>
+      </div>
+      <div id="bots-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+
+    <!-- ADD BOT MODAL -->
+    <div class="modal-overlay" id="add-bot-modal">
+      <div class="modal">
+        <button class="close-btn" onclick="closeModal('add-bot-modal')">✕</button>
+        <h2>Register Bot</h2>
+        <div class="form-group"><label>Bot ID (único, sin espacios)</label><input type="text" id="nb-id" placeholder="bot_mibot"></div>
+        <div class="form-group"><label>Name</label><input type="text" id="nb-name" placeholder="MiBot"></div>
+        <div class="form-group"><label>Avatar URL</label><input type="url" id="nb-avatar" placeholder="https://..."></div>
+        <div class="form-group"><label>Color</label><input type="color" id="nb-color" value="#7c3aed" style="width:48px;height:36px;border:none;border-radius:6px;cursor:pointer;background:none;"></div>
+        <div class="form-group"><label>Description</label><textarea id="nb-desc" rows="2" placeholder="Descripción del bot..."></textarea></div>
+        <div class="form-group"><label>Commands (uno por línea)</label><textarea id="nb-cmds" rows="3" placeholder="/comando — Descripción&#10;/otro — Otra acción"></textarea></div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeModal('add-bot-modal')">Cancel</button>
+          <button class="btn btn-primary" onclick="saveBot()">Save Bot</button>
+        </div>
+      </div>
+    </div>
+
     <!-- CAPTURES PAGE -->
     <div class="page" id="page-captures">
       <div class="section-header" style="margin-bottom:16px;">
@@ -407,8 +435,83 @@ function loadAll(){
   loadGuys();
   loadServers();
   loadCaptures();
+  loadBots();
   loadStats();
 }
+
+// ── BOTS ──
+const BUILTIN_BOTS = {
+  bot_pandex:   { uid:'bot_pandex',   name:'PanDex',   avatarUrl:'https://chibi.iitranq.co.uk/ay4HjymocGQQ.jpg',   avatarColor:'#f59e0b', description:'Bot de panes de Breadwinners.', botCommands:['/mine — Descubrir un pan misterioso','/breaddex — Ver tu colección','/mine moldy — Reclamar pan mohoso'], builtin:true },
+  bot_peterdex: { uid:'bot_peterdex', name:'PeterDex', avatarUrl:'https://chibi.iitranq.co.uk/Ymgqgt2Kk1lr.png', avatarColor:'#3b82f6', description:'Bot de personajes de Family Guy.', botCommands:['/catch — Atrapar el personaje actual','/guydex — Ver tu colección'], builtin:true },
+};
+
+function loadBots(){
+  fbOn('botdata/bots', snap=>{
+    const custom = snap.exists() ? snap.val() : {};
+    const all = { ...BUILTIN_BOTS, ...custom };
+    renderBotsList(all);
+  });
+}
+
+function renderBotsList(bots){
+  const el = document.getElementById('bots-list');
+  const entries = Object.values(bots);
+  if(!entries.length){ el.innerHTML='<div style="color:var(--text-2);font-size:.875rem;">No hay bots registrados.</div>'; return; }
+  el.innerHTML = entries.map(b=>`
+    <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:14px;">
+      <div style="width:48px;height:48px;border-radius:50%;overflow:hidden;background:${b.avatarColor||'#5865f2'};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;">
+        ${b.avatarUrl?`<img src="${b.avatarUrl}" style="width:100%;height:100%;object-fit:cover;">`:(b.name||'B')[0]}
+      </div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-weight:700;color:var(--text-0);">${b.name}</span>
+          <span style="background:var(--accent);color:#fff;font-size:.6rem;font-weight:700;border-radius:4px;padding:1px 5px;">BOT</span>
+          ${b.builtin?'<span style="background:var(--bg-4);color:var(--text-2);font-size:.6rem;font-weight:700;border-radius:4px;padding:1px 5px;">BUILT-IN</span>':''}
+        </div>
+        <div style="font-size:.78rem;color:var(--text-2);margin-top:2px;">${b.description||''}</div>
+        <div style="font-size:.72rem;color:var(--text-3);margin-top:4px;font-family:monospace;">${(b.botCommands||[]).join(' · ')}</div>
+      </div>
+      ${!b.builtin?`<button class="btn btn-danger btn-sm" onclick="deleteBot('${b.uid}')">Delete</button>`:''}
+    </div>`).join('');
+}
+
+function openAddBotModal(){
+  document.getElementById('nb-id').value='bot_';
+  document.getElementById('nb-name').value='';
+  document.getElementById('nb-avatar').value='';
+  document.getElementById('nb-color').value='#7c3aed';
+  document.getElementById('nb-desc').value='';
+  document.getElementById('nb-cmds').value='';
+  openModal('add-bot-modal');
+}
+
+async function saveBot(){
+  let id = document.getElementById('nb-id').value.trim().toLowerCase().replace(/\s+/g,'_');
+  const name = document.getElementById('nb-name').value.trim();
+  if(!id||!name){ showToast('ID and name are required'); return; }
+  if(!id.startsWith('bot_')) id='bot_'+id;
+  const cmds = document.getElementById('nb-cmds').value.trim().split('\n').filter(Boolean);
+  await fbSet('botdata/bots/'+id,{
+    uid:id, name,
+    avatarUrl: document.getElementById('nb-avatar').value.trim(),
+    avatarColor: document.getElementById('nb-color').value,
+    description: document.getElementById('nb-desc').value.trim(),
+    botCommands: cmds,
+    builtin: false,
+    createdAt: Date.now(),
+  });
+  closeModal('add-bot-modal');
+  showToast(`Bot "${name}" registered`);
+}
+
+async function deleteBot(id){
+  if(!confirm('Delete this bot?')) return;
+  await fbRemove('botdata/bots/'+id);
+  showToast('Bot deleted');
+}
+
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 
 // ── BREADS ──
 function loadBreads(){
